@@ -9,7 +9,7 @@ const AuthPage = (props) => {
   const oauthVerifier = searchParams.get("oauth_verifier");
   
     useEffect(() => {
-       fetch(`http://twitterautomation.up.railway.app/twitter/login/callback/`, {
+       fetch(`https://twitterautomation.up.railway.app/twitter/login/callback/`, {
         method:"POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({oauthToken, oauthVerifier})

@@ -5,7 +5,7 @@ const SignIn = () => {
   const startAuth = async () => {
     setLoading(true);
 
-    await fetch("http://twitterautomation.up.railway.app/twitter/login/start-auth")
+    await fetch("https://twitterautomation.up.railway.app/twitter/login/start-auth")
       .then(async(res) => {
         const response = await res.json()
 
@@ -16,6 +16,7 @@ const SignIn = () => {
       })
       .catch((err) => {
         setLoading(false);
+        console.log(err)
         alert("auth error", err);
       });
   };
