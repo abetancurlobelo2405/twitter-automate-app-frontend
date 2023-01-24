@@ -63,7 +63,7 @@ const ResultAI = () => {
   const generateTweet = async(e) => {
       e.preventDefault()
       setLoader(true)
-      const response = await fetch("https://twitterautomation.up.railway.app/twitter/generate", {
+      const response = await fetch("http://twitterautomation.up.railway.app/twitter/generate", {
           method: "POST",
           headers: {"Content-Type": "application/json"},
           body: JSON.stringify({text:textToAI})

@@ -5,7 +5,7 @@ const SignIn = () => {
   const startAuth = async () => {
     setLoading(true);
 
-    await fetch("https://twitterautomation.up.railway.app/twitter/login/start-auth")
+    await fetch("http://twitterautomation.up.railway.app/twitter/login/start-auth")
       .then(async(res) => {
         const response = await res.json()
 
