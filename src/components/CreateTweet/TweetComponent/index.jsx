@@ -7,7 +7,7 @@ const TweetComponent = (props) => {
   const token = Cookies.get("userID")
 
   const postTweet = async() => {
-    const response = await fetch("http://localhost:8080/twitter/login/post-tweet", {
+    const response = await fetch("https://twitterautomation.up.railway.app/twitter/login/post-tweet", {
         method: "POST",
         headers: {"Content-Type":"application/json", "authorization": token},
         body: JSON.stringify({result, headerText: headerText ? headerText : undefined, date, dateValues})

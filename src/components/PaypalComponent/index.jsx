@@ -13,7 +13,7 @@ export function PaypalSubscriptionButton({ plan, children }) {
   };
 
   const paypalOnApprove = async (data, detail) => {
-    const idToUser = await fetch("http://localhost:8080/twitter/login/start-auth", {
+    const idToUser = await fetch("https://twitterautomation.up.railway.app/twitter/login/start-auth", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
