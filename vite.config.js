@@ -6,6 +6,6 @@ export default defineConfig({
   plugins: [react()],
 
   server: {
-    host: "https://main--effulgent-cuchufli-c1d7d6.netlify.app/",
+    host: "0.0.0.0",
   },
 });
