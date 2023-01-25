@@ -21,7 +21,7 @@ const ThreadComponent = (props) => {
   }, [finalResult])
 
   const postThread = async() => {
-    const response = await fetch("https://twitterautomation.up.railway.app/twitter/login/post-thread", {
+    const response = await fetch(`${import.meta.env.VITE_URL}/twitter/login/post-thread`, {
         method: "POST",
         headers: {"Content-Type":"application/json", "authorization": token},
         body: JSON.stringify({result:finalResult, headerText: headerText ? headerText : undefined, dateValues, isSchedule})

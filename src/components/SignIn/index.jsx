@@ -4,8 +4,7 @@ const SignIn = () => {
   const [loading, setLoading] = useState(false);
   const startAuth = async () => {
     setLoading(true);
-
-    await fetch("https://twitterautomation.up.railway.app/twitter/login/start-auth")
+    await fetch(`${import.meta.env.VITE_URL}/twitter/login/start-auth`)
       .then(async(res) => {
         const response = await res.json()
 
