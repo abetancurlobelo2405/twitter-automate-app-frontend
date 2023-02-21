@@ -2,27 +2,46 @@ import styled from "styled-components"
 
 export const ThreadContainer = styled.div`
   overflow-y: scroll;
-  height: 100%;
+  display: flex;
+  flex-direction: column;
   width: 100%;
   box-shadow: 2px 2px 3px #dddddd;
   border: 1px solid #c9c9c9;
   border-radius: 4px;
+  overflow-y: hidden;
 `
 export const InputContainer = styled.div`
   position: relative;
+  width: 93%;
   margin: 5px;
+  border: 1px solid #dddddd;
+  background-color: #ffffff;
+  box-shadow: 2px 2px 3px #dddddd;
+  padding: 10px;
+`
+
+export const VerticalLine = styled.div`
+  height: 200px;
+  z-index: -100;
+  position: absolute;
+  right: 0;
+  left: 0;
+  width: 1px;
+  margin: auto;
+  background-color: #8a8a8a;
 `
 
 export const Input = styled.textarea`
-  border: ${props => props.totalLength >= 280 ? `2px solid #ffb1b1;` : `1px solid #dadada`};
+  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
   resize: none;
-  width: 97%;
-  height: 80px;
+  font-size: 16px;
+  height: 120px;
+  width: 96%;
   border-radius: 3px;
-  padding:10px;
-  margin: 0px auto;
+  padding-left:10px;
+  padding: 10px;
+  text-align: left;
  
-
   &:focus{
     background-color: #f5fdff;
     outline: none;
@@ -32,14 +51,26 @@ export const Input = styled.textarea`
 `;
 
 export const InputLength = styled.span`
-  position: absolute;
-  left: 1;
-  right: 0;
-  bottom: 0;
-  top: 1;
-  margin: 9px;
+  background-color: ${props => props.inputLength > 280 ? "1px solid #ff2424" : "#00acee"};
+  color: #ebebeb;
+  padding: 5px;
+  border-radius: 4px;
   pointer-events: none;
-  font-size: 10px;
+  font-size: 12px;
+  color: ${props => props.inputLength > 280 ? "#ff2424" : "none"};
+  border: ${props => props.inputLength > 280 ? "1px solid #ff2424" : "#00000"};
+`
+
+export const TrashContainer = styled.div`
+  &:hover{
+    color: #ff6262;
+    cursor: pointer;
+  }
+
+  &:focus{
+    color: #ff6262;
+    cursor: pointer;
+  }
 `
 
 export const TextResult = styled.div`

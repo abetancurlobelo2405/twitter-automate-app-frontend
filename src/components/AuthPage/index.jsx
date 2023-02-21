@@ -15,8 +15,9 @@ const AuthPage = (props) => {
         body: JSON.stringify({oauthToken, oauthVerifier})
       }).then(async response => {
         const data = await response.json()
-        Cookies.set("userID", data)
-        navigate('/home')
+        Cookies.set("userID", data.token)
+        window.localStorage.setItem("username", data.screenName)
+        window.location.href = "/"
       })
       }, []);
 

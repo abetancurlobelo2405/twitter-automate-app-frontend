@@ -2,12 +2,12 @@ import Cookies from "js-cookie";
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import { Input, InputContainer, InputLength, ThreadContainer, TweetButton } from "./ThreadComponentElements";
-import {BsTwitter} from "react-icons/bs"
+import { Input, InputContainer, InputLength, ThreadContainer, TrashContainer, TweetButton, VerticalLine } from "./ThreadComponentElements";
+import {BsFillTrashFill} from "react-icons/bs"
 
 const ThreadComponent = (props) => {
   const token = Cookies.get("userID")
-  const {result, headerText, dateValues, error, isSchedule} = props
+  const {result, headerText, dateValues, error, isSchedule, isThread, submitTweet} = props
   const [finalResult, setFinalResult] = useState([])
 
   useEffect(() => {
@@ -15,54 +15,63 @@ const ThreadComponent = (props) => {
       const filterEmptyStrings = resultToArray.filter(Boolean);
       setFinalResult(filterEmptyStrings)
   }, [result])
-
+  
   useEffect(() => {
-    window.sessionStorage.setItem("tweetResult", JSON.stringify(Array.from(finalResult)))
-  }, [finalResult])
-
-  const postThread = async() => {
-    const response = await fetch(`${import.meta.env.VITE_URL}/twitter/login/post-thread`, {
-        method: "POST",
-        headers: {"Content-Type":"application/json", "authorization": token},
-        body: JSON.stringify({result:finalResult, headerText: headerText ? headerText : undefined, dateValues, isSchedule})
-      })
-      if(response.status >= 400){
-        Cookies.remove("userID")
-        alert("An error ocurred, please log in and try again.")
-        window.location.href = "/"
-      }
-      if(response.status === 200){
-        alert("Tweet thread created!!")
-      }
-  }
+    if(isThread && submitTweet !== undefined){
+      console.log("wtf????????????????????threaddd?", submitTweet)
+        fetch(`${import.meta.env.VITE_URL}/twitter/login/post-thread`, {
+          method: "POST",
+          headers: {"Content-Type":"application/json", "authorization": token},
+          body: JSON.stringify({result:finalResult, headerText: headerText ? headerText : undefined, dateValues, isSchedule})
+        }).then((response) => {
+          if(response.status === 400 ||  response.status === 401){
+            Cookies.remove("userID")
+            console.log("An error ocurred, please log in and try again.")
+            window.location.href = "/"
+          }
+          if(response.status === 403){
+            console.log(response)
+            console.log("You cant tweet duplicated content")
+          }
+          if(response.status === 201){
+            console.log("Tweet thread created!!")
+          }
+        })
+    }
+  }, [submitTweet])  
  
   const handleInputChange = (element, index) => {
     const updatedResult = [...finalResult];
     updatedResult[index] = element.target.value;
     setFinalResult(updatedResult);
+
   }
 
-
+  const handleDeleteTweet = (index) => {
+    finalResult.splice(index, 1);
+    setFinalResult([...finalResult]);
+  }
 
   return (
   <>
   <ThreadContainer>
-    <InputContainer>
       {finalResult.map((individualResult, index) => (
+        <>
         <InputContainer>
-          <Input totalLength={individualResult.length} 
-          type="text" 
-          onChange={(e) => handleInputChange(e, index)} 
-          value={individualResult}/>
+          <VerticalLine/>
+          <TrashContainer>
+            <BsFillTrashFill style={{width:"12px"}} onClick={() => handleDeleteTweet(index)}/>
+          </TrashContainer>
+            <Input totalLength={individualResult.length} 
+            type="text" 
+            maxLength={280}
+            onChange={(e) => handleInputChange(e, index)} 
+            value={individualResult}/>
           <InputLength>{individualResult.length}/280</InputLength>
+          
         </InputContainer>
+        </>
       ))}
-    </InputContainer>
-    <TweetButton buttonError={error} onClick={postThread}>{
-    isSchedule && 
-    dateValues.days > 0 
-    || dateValues.hours > 0 
-    || dateValues.minutes > 0 ? <>¡SCHEDULE THIS TWEET!</> : <>¡TWEET IT NOW!</>}<BsTwitter/></TweetButton>
   </ThreadContainer>
   </>
   );

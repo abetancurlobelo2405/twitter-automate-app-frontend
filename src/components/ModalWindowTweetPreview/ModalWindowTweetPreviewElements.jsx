@@ -12,16 +12,14 @@ export const Overlay = styled.div`
 
 export const Modal = styled.div`
  display: flex;
-  flex-direction: row;
   justify-content: center;
   align-items: center;
-  margin-top: 30px;
   position: fixed;
-  top: 45%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 50%;
-  height: 80%;
+  width: 100px;
+  height: 100px;
   background-color: #ffffff;
   border-radius: 8px;
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
